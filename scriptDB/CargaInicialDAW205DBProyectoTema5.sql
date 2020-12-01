@@ -9,11 +9,11 @@ USE DAW205DBProyectoTema5;
 /*
     Metemos valores en los campos de la tabla
 */
-INSERT INTO Departamento VALUES
+INSERT INTO T02_Departamento VALUES
     ('BIO','Departamento de biologia', CURDATE(), 2.5),
     ('TEC','Departamento de tecnologia', CURDATE(), 1.0),    
     ('INF','Departamento de informatica', CURDATE(), 5.5);
-INSERT INTO Usuario(CodUsuario, DescUsuario, Password) VALUES
+INSERT INTO T01_Usuario(T01_CodUsuario, T01_DescUsuario, T01_Password) VALUES
     ('nereaA','NereaA',SHA2('nereaApaso',256)),
     ('miguel','Miguel',SHA2('miguelpaso',256)),
     ('bea','Bea',SHA2('beapaso',256)),
@@ -33,4 +33,4 @@ INSERT INTO Usuario(CodUsuario, DescUsuario, Password) VALUES
     ('amor','Amor',SHA2('amorpaso',256)),
     ('antonio','Antonio',SHA2('antoniopaso',256)),
     ('leticia','Leticia',SHA2('leticiapaso',256));
-INSERT INTO Usuario(CodUsuario, DescUsuario, Password, Perfil) VALUES ('admin','admin',SHA2('adminpaso',256), 'administrador');
+INSERT INTO T01_Usuario(T01_CodUsuario, T01_DescUsuario, T01_Password, T01_Perfil) VALUES ('admin','admin',SHA2('adminpaso',256), 'administrador');
