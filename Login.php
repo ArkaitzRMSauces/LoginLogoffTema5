@@ -13,16 +13,16 @@
         $entradaOK = true;
         
         $arrayErrores = [ //Recoge los errores del formulario
-            'campoAlfabetico' => null,
-            'campoPassword' => null            
+            'usuario' => null,
+            'password' => null            
         ]; 
         $arrayFormulario = [ //Recoge los datos del formulario
-            'campoAlfabetico' => null,
-            'campoPassword' => null
+            'usuario' => null,
+            'password' => null
         ];
         $errorInicioSesion = null;
         if (isset($_REQUEST['iniciarSesion'])) { //Código que se ejecuta cuando se envía el formulario
-            $arrayErrores['campoAlfabetico'] = validacionFormularios::comprobarAlfabetico($_REQUEST['campoAlfabetico'], 250, 1, 1);  //Máximo, mínimo y opcionalidad            
+            $arrayErrores['usuario'] = validacionFormularios::comprobarAlfabetico($_REQUEST['usuario'], 250, 1, 1);  //Máximo, mínimo y opcionalidad            
         foreach ($arrayErrores as $campo => $error) { //Recorre el array en busca de mensajes de error
                 if ($error != null) { //Si lo encuentra vacia el campo y cambia la condiccion
                     $entradaOK = false; //Cambia la condiccion de la variable
@@ -33,14 +33,14 @@
         }
         if ($entradaOK) { // Si el formulario se ha rellenado correctamente
             // Cargamos en el $arrayFormulario el valos de aquellos campos que se han rellenado correctamente            
-            $arrayFormulario['campoAlfabetico'] = $_REQUEST['campoAlfabetico'];
-            $arrayFormulario['campoPassword'] = $_REQUEST['campoPassword'];
+            $arrayFormulario['usuario'] = $_REQUEST['usuario'];
+            $arrayFormulario['password'] = $_REQUEST['password'];
             try {
                 // Datos de la conexión a la base de datos
                 $miDB = new PDO(DNS, USER, PASSWORD);
                 $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //Cómo capturar las excepciones y muestre los errores
-                $usuario = $_REQUEST['campoAlfabetico'];
-                $password = $_REQUEST['campoPassword'];
+                $usuario = $_REQUEST['usuario'];
+                $password = $_REQUEST['password'];
                 $consultaSQL = "SELECT * FROM T01_Usuario WHERE T01_CodUsuario = :codUsuario and T01_Password = :password";
                 $resultadoSQL = $miDB->prepare($consultaSQL);
                 $resultadoSQL->bindValue(":codUsuario", $usuario);
@@ -51,7 +51,7 @@
 
                     $consultaUpdateDatosUsuario = $miDB->prepare($sqlUpdateDatosUsuario); // prepara la consulta
                     $parametros = [':FechaHoraUltimaConexion' => time(), // time() devuelve el timestamp de el tiempo actual
-                                   ':CodUsuario' => $_REQUEST['campoAlfabetico'] // creo el array de parametros con el valor de los parametros de la consulta
+                                   ':CodUsuario' => $_REQUEST['usuario'] // creo el array de parametros con el valor de los parametros de la consulta
                                   ]; 
 
                     $consultaUpdateDatosUsuario->execute($parametros); // ejecuto la consulta pasando los parametros del array de parametros
@@ -60,7 +60,7 @@
                     $sqlUsuario = "SELECT T01_CodUsuario, T01_DescUsuario, T01_NumConexiones, T01_FechaHoraUltimaConexion FROM T01_Usuario WHERE T01_CodUsuario=:CodUsuario" ;
 
                     $consultaUsuario = $miDB->prepare($sqlUsuario); // prepara la consulta
-                    $parametros = [':CodUsuario' => $_REQUEST['campoAlfabetico'],// creo el array de parametros con el valor de los parametros de la consulta
+                    $parametros = [':CodUsuario' => $_REQUEST['usuario'],// creo el array de parametros con el valor de los parametros de la consulta
                                   ]; 
 
                     $consultaUsuario->execute($parametros); // ejecuto la consulta pasando los parametros del array de parametros
@@ -95,12 +95,12 @@
                     <div>
                         <label>Usuario: </label>
                         <input type = "text" name = "campoAlfabetico" placeholder="Nombre de usuario"
-                               value="<?php if($arrayErrores['campoAlfabetico'] == NULL && isset($_REQUEST['campoAlfabetico'])){ echo $_REQUEST['campoAlfabetico'];} ?>"><br>
+                               value="<?php if($arrayErrores['usuario'] == NULL && isset($_REQUEST['usuario'])){ echo $_REQUEST['usuario'];} ?>"><br>
                     </div>
                     <div>
                     <?php
-                    if ($arrayErrores['campoAlfabetico'] != NULL) {
-                        echo $arrayErrores['campoAlfabetico']; //Mensaje de error que tiene el $arrayErrores
+                    if ($arrayErrores['usuario'] != NULL) {
+                        echo $arrayErrores['usuario']; //Mensaje de error que tiene el $arrayErrores
                     }
                     ?>
                     </div>
@@ -108,12 +108,12 @@
                     <div>
                         <label>Contaseña: </label>
                         <input type = "password" name = "campoPassword" placeholder = "Contraseña"
-                               value="<?php if($arrayErrores['campoPassword'] == NULL && isset($_REQUEST['campoPassword'])){ echo $_REQUEST['campoPassword'];} ?>"><br>
+                               value="<?php if($arrayErrores['password'] == NULL && isset($_REQUEST['password'])){ echo $_REQUEST['password'];} ?>"><br>
                     </div>
                     <div>
                     <?php
-                    if ($arrayErrores['campoPassword'] != NULL) {
-                        echo $arrayErrores['campoPassword']; //Mensaje de error que tiene el $arrayErrores
+                    if ($arrayErrores['password'] != NULL) {
+                        echo $arrayErrores['password']; //Mensaje de error que tiene el $arrayErrores
                     }
                     ?>
                     </div>
