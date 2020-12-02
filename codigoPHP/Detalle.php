@@ -5,7 +5,7 @@
  *   Detalle: LOGINLOGOFF-TEMA5
 */
 session_start(); // inicia una sesion, o recupera una existente
-if(!isset($_SESSION['usuarioDAW217LoginLogoffTema5'])){
+if(!isset($_SESSION['usuarioDAW205LoginLogoffTema5'])){
     header('Location: Programa.php');
     exit;
 }
