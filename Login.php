@@ -23,6 +23,7 @@
         $errorInicioSesion = null;
         if (isset($_REQUEST['iniciarSesion'])) { //Código que se ejecuta cuando se envía el formulario
             $arrayErrores['campoAlfabetico'] = validacionFormularios::comprobarAlfabetico($_REQUEST['campoAlfabetico'], 250, 1, 1);  //Máximo, mínimo y opcionalidad            
+            $arrayErrores['campoPassword'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['campoAlfabetico'], 250, 1, 1);  //Máximo, mínimo y opcionalidad            
         foreach ($arrayErrores as $campo => $error) { //Recorre el array en busca de mensajes de error
                 if ($error != null) { //Si lo encuentra vacia el campo y cambia la condiccion
                     $entradaOK = false; //Cambia la condiccion de la variable
