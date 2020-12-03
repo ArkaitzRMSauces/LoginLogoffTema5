@@ -77,7 +77,7 @@
                     header('Location: codigoPHP/Programa.php');
                     exit;
                 }else{
-                    $errorInicioSesion="Credenciales incorrectas";
+                    header('Location: Login.php');
                 }
             } catch (PDOException $mensajeError) { //Cuando se produce una excepcion se corta el programa y salta la excepción con el mensaje de error
                 echo "<h3>Mensaje de ERROR</h3>";
@@ -117,9 +117,6 @@
                     ?>
                     </div>
                     <div>
-                        <?php
-                            echo ($errorInicioSesion != NULL) ? $errorInicioSesion : NULL;
-                        ?>
                         <br><input type = "submit" name = "iniciarSesion" value = "Iniciar Sesion">
                         <input type = "submit" name = "salir" value = "Volver">
                     </div>
