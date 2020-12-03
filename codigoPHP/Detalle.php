@@ -25,25 +25,6 @@ if(!isset($_SESSION['usuarioDAW205LoginLogoffTema5'])){
                 </tr>
             </tbody>
         </table>
-        
-        <h2>_SERVER</h2>
-        <?php if(!empty($_SERVER)){ ?>
-        <table>
-            <tbody>
-                <?php 
-                    foreach ($_SERVER as $clave => $valor){
-                ?>
-                <tr>
-                    <td><?php echo $clave ?></td>
-                    <td><?php echo $valor ?></td>
-                </tr>
-                <?php 
-                    }
-                ?>
-            </tbody>
-        </table>
-        <?php }?>
-        
         <h2 >_COOKIE</h2>
         <?php if(!empty($_COOKIE)){ ?>
         <table >
@@ -79,7 +60,23 @@ if(!isset($_SESSION['usuarioDAW205LoginLogoffTema5'])){
             </tbody>
         </table>
         <?php }?>
-        
+        <h2>_SERVER</h2>
+        <?php if(!empty($_SERVER)){ ?>
+        <table>
+            <tbody>
+                <?php 
+                    foreach ($_SERVER as $clave => $valor){
+                ?>
+                <tr>
+                    <td><?php echo $clave ?></td>
+                    <td><?php echo $valor ?></td>
+                </tr>
+                <?php 
+                    }
+                ?>
+            </tbody>
+        </table>
+        <?php }?>
         <h2 >_GET</h2>
         <?php if(!empty($_GET)){ ?>
         <table >
