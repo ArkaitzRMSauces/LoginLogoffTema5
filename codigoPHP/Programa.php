@@ -1,6 +1,5 @@
 <?php
 if(isset($_REQUEST['detalle'])){
-    session_destroy();
     header('Location: Detalle.php');
     exit;
 }
@@ -91,8 +90,13 @@ if($entradaOK){ // si la entrada esta bien recojo los valores introducidos y hag
         <header>
             <h1>Sesion iniciada</h1>
             <h2><?php echo $_COOKIE['saludo'] . " " . $descUsuario; ?> </h2>
-            <h2><?php echo "Numero de conexiones: " . $numConexiones?></h2>
-            <h2><?php echo ($numConexiones!=1) ? "Ultima conexion: " . date('d/m/Y H:i:s', $_SESSION['fechaHoraUltimaConexionAnteriorDAW205LoginLogoffTema5']) : "Primera conexion"?></h2>            
+            <h2><?php if($numConexiones!=1){
+                echo "Numero de conexiones: " . $numConexiones;
+                echo "<br>Ultima conexion: " . date('d/m/Y H:i:s', $_SESSION['fechaHoraUltimaConexionAnteriorDAW205LoginLogoffTema5']);   
+            }else{
+                echo "Primera conexion";
+            }
+            ?></h2>
         </header>
         <main>
             <form name="formularioIdioma" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
