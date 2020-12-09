@@ -48,16 +48,6 @@
                 $resultadoSQL->bindValue(':password', hash('sha256', $usuario . $password));
                 $resultadoSQL->execute();
                 if ($resultadoSQL->rowCount() == 1) { //te recorre todas las campos de la base, y si uno es como dice el query pues se ejecuta el if
-                    $sqlUpdateDatosUsuario = "UPDATE T01_Usuario SET T01_NumConexiones = (T01_NumConexiones + 1) , T01_FechaHoraUltimaConexion = :FechaHoraUltimaConexion WHERE T01_CodUsuario=:CodUsuario";
-
-                    $consultaUpdateDatosUsuario = $miDB->prepare($sqlUpdateDatosUsuario); // prepara la consulta
-                    $parametros = [':FechaHoraUltimaConexion' => time(), // time() devuelve el timestamp de el tiempo actual
-                                   ':CodUsuario' => $_REQUEST['campoAlfabetico'] // creo el array de parametros con el valor de los parametros de la consulta
-                                  ]; 
-
-                    $consultaUpdateDatosUsuario->execute($parametros); // ejecuto la consulta pasando los parametros del array de parametros
-
-
                     $sqlUsuario = "SELECT T01_CodUsuario, T01_DescUsuario, T01_NumConexiones, T01_FechaHoraUltimaConexion FROM T01_Usuario WHERE T01_CodUsuario=:CodUsuario" ;
 
                     $consultaUsuario = $miDB->prepare($sqlUsuario); // prepara la consulta
@@ -67,6 +57,14 @@
                     $consultaUsuario->execute($parametros); // ejecuto la consulta pasando los parametros del array de parametros
 
                     $oUsuario = $consultaUsuario->fetchObject();
+                    $sqlUpdateDatosUsuario = "UPDATE T01_Usuario SET T01_NumConexiones = (T01_NumConexiones + 1) , T01_FechaHoraUltimaConexion = :FechaHoraUltimaConexion WHERE T01_CodUsuario=:CodUsuario";
+
+                    $consultaUpdateDatosUsuario = $miDB->prepare($sqlUpdateDatosUsuario); // prepara la consulta
+                    $parametros = [':FechaHoraUltimaConexion' => time(), // time() devuelve el timestamp de el tiempo actual
+                                   ':CodUsuario' => $_REQUEST['campoAlfabetico'] // creo el array de parametros con el valor de los parametros de la consulta
+                                  ]; 
+
+                    $consultaUpdateDatosUsuario->execute($parametros); // ejecuto la consulta pasando los parametros del array de parametros
                     session_start(); // inicia una sesion, o recupera una existente
                     $_SESSION['usuarioDAW205LoginLogoffTema5'] = $oUsuario->T01_CodUsuario;
                     $_SESSION['fechaHoraUltimaConexionAnteriorDAW205LoginLogoffTema5'] = $oUsuario->T01_FechaHoraUltimaConexion;
