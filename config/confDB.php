@@ -10,4 +10,3 @@
     define('USER', 'usuarioDAW205DBProyectoTema5');//usuarioDAW205DBDepartamentos
     define('PASSWORD', 'paso');//paso
 ?>
-
