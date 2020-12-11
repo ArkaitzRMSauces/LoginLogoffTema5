@@ -1,20 +1,18 @@
 /**
  * Author:  Arkaitz Rodriguez
- * Created: 27-10-2020
+ * Created: 22-11-2020
 */
-
 /*
-    Seleccionamos la base de datos que acabamos de crear
+    Seleccionamos la base de datos
 */
-USE db771560304;
-
+USE DAW205DBProyectoTema5;
 /*
     Metemos valores en los campos de la tabla
 */
 INSERT INTO T02_Departamento VALUES
-('BIO','Departamento de biologia', CURDATE(), 2.5),
-('TEC','Departamento de tecnologia', CURDATE(), 1.0),    
-('INF','Departamento de informatica', CURDATE(), 5.5);
+    ('BIO','Departamento de biologia', CURDATE(), 2.5),
+    ('TEC','Departamento de tecnologia', CURDATE(), 1.0),    
+    ('INF','Departamento de informatica', CURDATE(), 5.5);
 INSERT INTO T01_Usuario(T01_CodUsuario, T01_DescUsuario, T01_Password) VALUES
     ('nereaA','NereaA',SHA2('nereaApaso',256)),
     ('miguel','Miguel',SHA2('miguelpaso',256)),
