@@ -10,8 +10,7 @@ require_once '../config/confDB.php';
 require_once '../core/libreriaValidacion.php';
     if(!isset($_SESSION['usuarioDAW205LoginLogoffTema5'])){
     header('Location: ../Login.php');
-    }
-
+    } 
 $entradaOK=true;
 $aErrores=[];
 try{
@@ -32,7 +31,14 @@ try{
     }
     $rs=$consulta->fetchObject();
 if(isset($_REQUEST['Enviar'])){
-    $aErrores['desc']= validacionFormularios::comprobarAlfaNumerico($_REQUEST['desc'], 250, 1, 1);
+    $aErrores['contraA']= validacionFormularios::comprobarAlfaNumerico($_REQUEST['contraA'], 250, 1, 1);
+    $aErrores['contra1']= validacionFormularios::comprobarAlfaNumerico($_REQUEST['contra1'], 250, 1, 1);
+    $aErrores['contra2']= validacionFormularios::comprobarAlfaNumerico($_REQUEST['contra2'], 250, 1, 1);
+    if(hash("sha256", $_REQUEST['usuario2'].$_REQUEST['contraA'])!==$rs->T01_Password){
+    $entradaOK=false;
+    }else if($_REQUEST['contra1']!==$_REQUEST['contra2']){
+        $entradaOK=false;
+    }
 }else{
     $entradaOK=false;
 }
@@ -45,12 +51,12 @@ if($entradaOK){
         echo $exp->getMessage();
     }
     try{
-    $sql2="Update T01_Usuario SET T01_DescUsuario=:desc WHERE T01_CodUsuario=:usuarioA";
+    $sql2="Update T01_Usuario SET T01_Password=:contra WHERE T01_CodUsuario=:usuarioA";
     $consulta=$miDB->prepare($sql2);
     $consulta->bindParam(":usuarioA", $_REQUEST['usuario2']);
-    $consulta->bindParam(":desc", $_REQUEST['desc']);
+    $consulta->bindParam(":contra", hash("sha256", $_REQUEST['usuario2'].$_REQUEST['contra1']));
     $consulta->execute();
-    header('Location: Programa.php');
+    header('Location: Editar.php');
     } catch (PDOException $exp) {
         echo $exp->getCode();
         echo $exp->getMessage();
@@ -60,22 +66,26 @@ if($entradaOK){
     }
 }else{
 ?>
-<form action="Editar.php" method="POST" enctype="multipart/form-data" name="Formulario">
+<form action="CambiarContraseña.php" method="POST" enctype="multipart/form-data" name="Formulario">
     <label for="usuario">usuario</label>
     <input type="text" name="usuario" id="usuario" disabled value="<?php echo $rs->T01_CodUsuario?>">
     <input type="hidden" name="usuario2" id="usuario2" value="<?php echo $rs->T01_CodUsuario?>">
     <br><br>
-    <label for="desc">Descipcion usuario</label>
-    <input type="text" name="desc" id="desc" value="<?php echo $rs->T01_DescUsuario?>">
+    <label for="contraA">Contraseña antigua</label>
+    <input type="password" name="contraA" id="contraA">
+    <br><br>
+    <label for="contra1">Contraseña Nueva</label>
+    <input type="password" name="contra1" id="contra1">
+    <br><br>
+    <label for="contra2">Repita la contraseña</label>
+    <input type="password" name="contra2" id="contra2">
     <br><br>
     <input type="submit" value="Enviar" name="Enviar">
-    <input type="button" onclick="location='CambiarContraseña.php'" value="Cambiar Contraseña">
-    <input type="button" onclick="location='Borrar.php'" value="Borrar Usuario">
-    <input type="button" onclick="location='Programa.php'" value="Atras">
+    <input type="button" onclick="location='Editar.php'" value="Atras">
 </form>
 
 <?php
-        foreach ($aErrores as $key => $value) {
-                echo "Error en ".$key." ".$value;
-            }
+    foreach ($aErrores as $key => $value) {
+        echo "Error en ".$key." ".$value."<br>";
+    }
 }
