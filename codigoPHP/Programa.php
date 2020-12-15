@@ -18,6 +18,10 @@ if(isset($_REQUEST['detalle'])){
     header('Location: Detalle.php');
     exit;
 }
+if(isset($_REQUEST['editar'])){
+    header('Location: Editar.php');
+    exit;
+}
 if (!isset($_COOKIE['idioma'])) { // si se ha pulsado el botton de cerrar sesion
     setcookie('idioma','es', time() + 2592000); // modifica la cookie 'idioma' con el valor recibido del formulario para 30 dias
     header('Location: Programa.php');
@@ -101,6 +105,7 @@ try {
             </form>
             <br>
             <form  name="logout" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+                <button type="submit" name='editar' value="Editar Perfil">Editar Perfil</button>
                 <button type="submit" name='cerrarSesion' value="Cerrar Sesion">Cerrar Sesion</button>
                 <button type="submit" name='detalle' value="Detalles">Detalles</button>
             </form>
