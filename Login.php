@@ -8,6 +8,10 @@
             header('Location: ../proyectoDWES/indexProyectoDWES.php');
             exit;
         }
+        if(isset($_REQUEST['registrate'])){
+            header('Location: codigoPHP/Registro.php');
+            exit;
+        }
         require_once 'core/libreriaValidacion.php';//Importamos la librería de validación para comprobar que los campos se introducen correctamente
         require_once('config/confDB.php');
         $entradaOK = true;
@@ -116,6 +120,7 @@
                     </div>
                     <div>
                         <br><input type = "submit" name = "iniciarSesion" value = "Iniciar Sesion">
+                        <input type = "submit" name = "registrate" value = "Registrarse"><br>
                         <input type = "submit" name = "salir" value = "Volver">
                     </div>
                 </fieldset>
