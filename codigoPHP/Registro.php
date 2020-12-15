@@ -10,7 +10,7 @@ require_once '../core/libreriaValidacion.php';
 $entradaOK=true;
 $aErrores=[];
 if(isset($_REQUEST['Enviar'])){
-    $aErrores['usuario']= validacionFormularios::comprobarAlfaNumerico($_REQUEST['usuario'], 15, 1, 1);
+    $aErrores['usuario']= validacionFormularios::comprobarAlfabetico($_REQUEST['usuario'], 15, 1, 1);
     $aErrores['desc']= validacionFormularios::comprobarAlfaNumerico($_REQUEST['desc'], 250, 1, 1);
     $aErrores['contrasena']= validacionFormularios::comprobarAlfaNumerico($_REQUEST['contrasena'], 64, 4, 1);
     foreach ($aErrores as $key => $value) {
